@@ -8,6 +8,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,10 +23,14 @@ import br.com.alura.loja.modelo.Produto;
 public class CarrinhoTest {
 
 	private HttpServer server;
+	private Client client;
 
 	@Before
 	public void levantaServidor() {
 		server = Servidor.inicializaServidor();
+		ClientConfig clientConfig = new ClientConfig();
+		clientConfig.register(new LoggingFilter());
+		client = ClientBuilder.newClient(clientConfig);
 	}
 
 	@After
@@ -34,7 +40,7 @@ public class CarrinhoTest {
 
 	@Test
 	public void testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado() {
-		Client client = ClientBuilder.newClient();
+		
 		WebTarget target = client.target("http://localhost:8080");
 		String conteudo = target.path("/carrinhos/1").request().get(String.class);
 
@@ -45,7 +51,6 @@ public class CarrinhoTest {
 
 	@Test
 	public void testaCadastrarCarrinho() {
-		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target("http://localhost:8080");
 
 		Carrinho carrinho = new Carrinho();
