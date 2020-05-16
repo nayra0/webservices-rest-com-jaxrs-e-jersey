@@ -1,4 +1,4 @@
-package br.com.alura.loja.servidor;
+package br.com.alura.loja;
 
 import java.io.IOException;
 import java.net.URI;
