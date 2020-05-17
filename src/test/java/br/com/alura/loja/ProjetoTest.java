@@ -10,6 +10,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.alura.loja.modelo.Projeto;
+
 public class ProjetoTest {
 
 	private HttpServer server;
@@ -29,9 +31,9 @@ public class ProjetoTest {
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target("http://localhost:8080");
 
-		String conteudo = target.path("/projetos").request().get(String.class);
+		Projeto projeto = target.path("/projetos/1").request().get(Projeto.class);
 
-		Assert.assertTrue(conteudo.contains("Minha loja"));
+		Assert.assertEquals("Minha loja", projeto.getNome());
 	}
 
 }
